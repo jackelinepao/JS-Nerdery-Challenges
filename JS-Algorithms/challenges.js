@@ -13,7 +13,27 @@ Invoking "readableTime(3690)" should return "01:01:30" (HH:MM:SS)
 ***** */
 
 const readableTime = (seconds) => {
-  // YOUR CODE HERE...
+  let hours = 0;
+  let minutes = 0;
+  let formatHMS = 0;
+
+  function padLeadingZeros(num) {
+    if (num < 10) {
+      return `0${num}`
+    } else {
+      return num
+    }
+  };
+
+  minutes = seconds / 60;
+  seconds = padLeadingZeros(Math.floor(seconds % 60));
+  hours = padLeadingZeros(Math.floor(minutes / 60));
+  minutes = padLeadingZeros(Math.floor(minutes % 60));
+  formatHMS = `"${hours}:${minutes}:${seconds}" (HH:MM:SS)`
+
+  console.log(formatHMS);
+  return formatHMS;
+
 };
 
 readableTime(458);
@@ -41,7 +61,22 @@ Invoking "circularArray(2)" should return "["Island", "Japan", "Israel", "German
 const COUNTRY_NAMES = ["Germany", "Norway", "Island", "Japan", "Israel"];
 
 const circularArray = (index) => {
-  // YOUR CODE HERE...
+  let sizeArray = COUNTRY_NAMES.length;
+  let firstPart = [];
+  let secondPart = [];
+  let array = COUNTRY_NAMES[(index % sizeArray + sizeArray) % sizeArray];
+  let nIndice = COUNTRY_NAMES.indexOf(array)
+
+  for (let i = 0; i < sizeArray; i++) {
+    if (i >= nIndice) {
+      secondPart.push(COUNTRY_NAMES[i])
+    } else {
+      firstPart.push(COUNTRY_NAMES[i])
+    }
+  }
+  array = secondPart.concat(firstPart)
+
+  return array
 };
 
 circularArray(2);
