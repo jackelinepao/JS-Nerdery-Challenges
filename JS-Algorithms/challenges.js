@@ -24,15 +24,17 @@ const readableTime = (seconds) => {
       return num
     }
   };
+  if (seconds >= 0) {
+    minutes = seconds / 60;
+    seconds = padLeadingZeros(Math.floor(seconds % 60));
+    hours = padLeadingZeros(Math.floor(minutes / 60));
+    minutes = padLeadingZeros(Math.floor(minutes % 60));
+    formatHMS = `${hours}:${minutes}:${seconds}`
 
-  minutes = seconds / 60;
-  seconds = padLeadingZeros(Math.floor(seconds % 60));
-  hours = padLeadingZeros(Math.floor(minutes / 60));
-  minutes = padLeadingZeros(Math.floor(minutes % 60));
-  formatHMS = `"${hours}:${minutes}:${seconds}" (HH:MM:SS)`
+    return formatHMS;
+  }
 
-  console.log(formatHMS);
-  return formatHMS;
+
 
 };
 
@@ -106,11 +108,22 @@ The last 3 digits for the sum of powers from 1 to 10 is "317"
 
 const ownPower = (number, lastDigits) => {
   // YOUR CODE HERE...
+  let sum = 0;
+  let n = "1";
+  for (let i = 1; i <= number; i++) {
+    sum += (i ** i)
+  }
+  for (let j = 0; j < lastDigits; j++) {
+    n += "0"
+  }
+
+  return `${sum % +n}`
 };
 
 ownPower(10, 3);
 ownPower(12, 7);
 ownPower(21, 12);
+
 
 /* *****
 Challenge 4
@@ -131,6 +144,19 @@ Since 10! === 3628800 and you sum 3 + 6 + 2 + 8 + 8 + 0 + 0
 
 const digitSum = (n) => {
   // YOUR CODE HERE...
+  n = BigInt(n);
+  let sum = 0;
+  let factorial = BigInt(1);
+
+  for (let i = n; i >= 1; i--) {
+    factorial *= i;
+  }
+
+  const factorialCompletado = factorial.toString().split('');
+  const digits = factorialCompletado.map((item) => parseInt(item));
+  sum = digits.reduce((a, b) => a + b, 0)
+
+  return sum
 };
 
 digitSum(10);
@@ -154,6 +180,9 @@ Because the 12th index in the Fibonacci sequence is 144, and 144 has three digit
 
 const fibIndex = (n) => {
   // YOUR CODE HERE...
+ 
+
+
 };
 
 fibIndex(3);
