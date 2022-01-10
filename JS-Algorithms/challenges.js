@@ -179,10 +179,16 @@ Because the 12th index in the Fibonacci sequence is 144, and 144 has three digit
 ***** */
 
 const fibIndex = (n) => {
-  // YOUR CODE HERE...
- 
-
-
+  let numeros = [0, 1];
+  let index = 0;
+  for (let i = 2; i < 100; i++) {
+    numeros[i] = numeros[i - 2] + numeros[i - 1];
+    if (numeros[i].toString().length == n) {
+      index = i
+      break
+    }
+  }
+  return index;
 };
 
 fibIndex(3);
