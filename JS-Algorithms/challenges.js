@@ -13,7 +13,29 @@ Invoking "readableTime(3690)" should return "01:01:30" (HH:MM:SS)
 ***** */
 
 const readableTime = (seconds) => {
-  // YOUR CODE HERE...
+  let hours = 0;
+  let minutes = 0;
+  let formatHMS = 0;
+
+  function padLeadingZeros(num) {
+    if (num < 10) {
+      return `0${num}`
+    } else {
+      return num
+    }
+  };
+  if (seconds >= 0) {
+    minutes = seconds / 60;
+    seconds = padLeadingZeros(Math.floor(seconds % 60));
+    hours = padLeadingZeros(Math.floor(minutes / 60));
+    minutes = padLeadingZeros(Math.floor(minutes % 60));
+    formatHMS = `${hours}:${minutes}:${seconds}`
+
+    return formatHMS;
+  }
+
+
+
 };
 
 readableTime(458);
@@ -41,7 +63,22 @@ Invoking "circularArray(2)" should return "["Island", "Japan", "Israel", "German
 const COUNTRY_NAMES = ["Germany", "Norway", "Island", "Japan", "Israel"];
 
 const circularArray = (index) => {
-  // YOUR CODE HERE...
+  let sizeArray = COUNTRY_NAMES.length;
+  let firstPart = [];
+  let secondPart = [];
+  let array = COUNTRY_NAMES[(index % sizeArray + sizeArray) % sizeArray];
+  let nIndice = COUNTRY_NAMES.indexOf(array)
+
+  for (let i = 0; i < sizeArray; i++) {
+    if (i >= nIndice) {
+      secondPart.push(COUNTRY_NAMES[i])
+    } else {
+      firstPart.push(COUNTRY_NAMES[i])
+    }
+  }
+  array = secondPart.concat(firstPart)
+
+  return array
 };
 
 circularArray(2);
@@ -71,11 +108,22 @@ The last 3 digits for the sum of powers from 1 to 10 is "317"
 
 const ownPower = (number, lastDigits) => {
   // YOUR CODE HERE...
+  let sum = 0;
+  let n = "1";
+  for (let i = 1; i <= number; i++) {
+    sum += (i ** i)
+  }
+  for (let j = 0; j < lastDigits; j++) {
+    n += "0"
+  }
+
+  return `${sum % +n}`
 };
 
 ownPower(10, 3);
 ownPower(12, 7);
 ownPower(21, 12);
+
 
 /* *****
 Challenge 4
@@ -96,6 +144,19 @@ Since 10! === 3628800 and you sum 3 + 6 + 2 + 8 + 8 + 0 + 0
 
 const digitSum = (n) => {
   // YOUR CODE HERE...
+  let sum = 0;
+  let factorial = 1;
+
+  for (let i = n; i > 0; i--) {
+    factorial *= i;
+  }
+
+  factorial = BigInt(factorial).toString()
+  
+  for (let j = 0; j < factorial.length; j++){
+    sum += +factorial[j];    
+  }
+  return sum;
 };
 
 digitSum(10);
@@ -118,7 +179,16 @@ Because the 12th index in the Fibonacci sequence is 144, and 144 has three digit
 ***** */
 
 const fibIndex = (n) => {
-  // YOUR CODE HERE...
+  let numeros = [0, 1];
+  let index = 0;
+  for (let i = 2; i < 100; i++) {
+    numeros[i] = numeros[i - 2] + numeros[i - 1];
+    if (numeros[i].toString().length == n) {
+      index = i
+      break
+    }
+  }
+  return index;
 };
 
 fibIndex(3);
