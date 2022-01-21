@@ -1,133 +1,93 @@
-/* *****
-Challenge 1
-
-"Readable Time"
-
-The function "readableTime" accepts a positive number as argument,
-you should be able to modify the function to return the time from seconds
-into a human readable format.
-
-Example:
-
-Invoking "readableTime(3690)" should return "01:01:30" (HH:MM:SS)
-***** */
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.fibIndex = exports.digitSum = exports.ownPower = exports.circularArray = exports.readableTime = void 0;
 const readableTime = (seconds) => {
-  // YOUR CODE HERE...
+    let formatHMS = null;
+    function padLeadingZeros(num) {
+        let formatNum = num.toString();
+        if (num < 10) {
+            formatNum = `0${num}`;
+        }
+        return formatNum;
+    }
+    ;
+    if (seconds >= 0) {
+        const conversionFactor = 60;
+        const numSeconds = Math.floor(seconds % conversionFactor);
+        let minutes = seconds / conversionFactor;
+        const hours = Math.floor(minutes / conversionFactor);
+        minutes = Math.floor(minutes % conversionFactor);
+        formatHMS = `${padLeadingZeros(hours)}:${padLeadingZeros(minutes)}:${padLeadingZeros(numSeconds)}`;
+    }
+    return formatHMS;
 };
-
-readableTime(458);
-readableTime(3690);
-readableTime(7293);
-readableTime(32420);
-
-/* *****
-Challenge 2
-
-"Circular Array"
-
-Given the following array "COUNTRY_NAMES", modify the function "circularArray"
-to return an array that meets the following criteria:
-
-- The index number passed to the function should be the first element in the resulting array
-- The resulting array must have the same length as the initial array
-- The value of the argument "index" will always be a positive number
-
-Example:
-
-Invoking "circularArray(2)" should return "["Island", "Japan", "Israel", "Germany", "Norway"]"
-***** */
-
-const COUNTRY_NAMES = ["Germany", "Norway", "Island", "Japan", "Israel"];
-
-const circularArray = (index) => {
-  // YOUR CODE HERE...
-};
-
-circularArray(2);
-circularArray(3);
-circularArray(5);
-circularArray(9);
-
-/* *****
-Challenge 3
-
-"Own Powers"
-
-The function "ownPower" accepts two arguments. "number" and "lastDigits".
-
-The "number" indicates how long is the series of numbers you are going to work with, your
-job is to multiply each of those numbers by their own powers and after that sum all the results.
-
-"lastDigits" is the length of the number that your function should return, as a string!.
-See example below.
-
-Example:
-
-Invoking "ownPower(10, 3)" should return "317"
-because 1^1 + 2^2 + 3^3 + 4^4 + 5^5 + 6^6 + 7^7 + 8^8 + 9^9 + 10^10 = 10405071317
-The last 3 digits for the sum of powers from 1 to 10 is "317"
-***** */
-
-const ownPower = (number, lastDigits) => {
-  // YOUR CODE HERE...
-};
-
-ownPower(10, 3);
-ownPower(12, 7);
-ownPower(21, 12);
-
-/* *****
-Challenge 4
-
-"Sum of factorial digits"
-
-A factorial (x!) means x! * (x - 1)... * 3 * 2 * 1.
-For example: 10! = 10 × 9 × ... × 3 × 2 × 1 = 3628800
-
-Modify the function "digitSum" to return a number that
-equals to the sum of the digits in the result of 10!
-
-Example:
-
-Invoking "digitSum(10)" should return "27".
-Since 10! === 3628800 and you sum 3 + 6 + 2 + 8 + 8 + 0 + 0
-***** */
-
-const digitSum = (n) => {
-  // YOUR CODE HERE...
-};
-
-digitSum(10);
-digitSum(42);
-digitSum(71);
-digitSum(89);
-
-/* *****
-Challenge 5
-
-"N-Digit Fibonacci Number"
-
-Modify the function "fibIndex" to return the index of the first Fibonacci
-number whose digits-length equals the number passed in to the function.
-
-Example:
-
-Invoking "fibIndex(3)" should return "12".
-Because the 12th index in the Fibonacci sequence is 144, and 144 has three digits
-***** */
-
-const fibIndex = (n) => {
-  // YOUR CODE HERE...
-};
-
-fibIndex(3);
-fibIndex(5);
-fibIndex(12);
-fibIndex(15);
-
 exports.readableTime = readableTime;
+(0, exports.readableTime)(458);
+(0, exports.readableTime)(3690);
+(0, exports.readableTime)(7293);
+(0, exports.readableTime)(32420);
+const COUNTRY_NAMES = ["Germany", "Norway", "Island", "Japan", "Israel"];
+const circularArray = (index) => {
+    let firstPartArray;
+    let circleArray;
+    const sizeArray = COUNTRY_NAMES.length;
+    const nIndexCircularArray = (index % sizeArray + sizeArray) % sizeArray;
+    firstPartArray = COUNTRY_NAMES.slice(0, nIndexCircularArray);
+    circleArray = COUNTRY_NAMES.slice(nIndexCircularArray, sizeArray);
+    Array.prototype.push.apply(circleArray, firstPartArray);
+    return circleArray;
+};
 exports.circularArray = circularArray;
+(0, exports.circularArray)(2);
+(0, exports.circularArray)(3);
+(0, exports.circularArray)(5);
+(0, exports.circularArray)(9);
+const ownPower = (number, lastDigits) => {
+    let sumResult = 0;
+    let stringsumResult;
+    let sizeArray;
+    let lastDigitsOfTheSumResult;
+    for (let i = 1; i <= number; i++) {
+        sumResult += (Math.pow(i, i));
+    }
+    stringsumResult = BigInt(sumResult).toString();
+    sizeArray = stringsumResult.length;
+    lastDigitsOfTheSumResult = stringsumResult.slice(sizeArray - lastDigits, sizeArray);
+    return lastDigitsOfTheSumResult;
+};
 exports.ownPower = ownPower;
+(0, exports.ownPower)(10, 3);
+(0, exports.ownPower)(12, 7);
+(0, exports.ownPower)(21, 12);
+const digitSum = (n) => {
+    let sumResult = 0;
+    let factorial = 1;
+    for (let i = n; i > 0; i--) {
+        factorial *= i;
+    }
+    factorial = Array.from(BigInt(factorial).toString()).map(Number);
+    sumResult = factorial.reduce((acumulator, current) => acumulator + current);
+    return sumResult;
+};
 exports.digitSum = digitSum;
+(0, exports.digitSum)(10);
+(0, exports.digitSum)(42);
+(0, exports.digitSum)(71);
+(0, exports.digitSum)(89);
+const fibIndex = (n) => {
+    let fibonacciSequence = [0, 1];
+    let index = 0;
+    for (let i = 2; i < 100; i++) {
+        fibonacciSequence[i] = fibonacciSequence[i - 2] + fibonacciSequence[i - 1];
+        if (fibonacciSequence[i].toString().length == n) {
+            index = i;
+            break;
+        }
+    }
+    return index;
+};
 exports.fibIndex = fibIndex;
+(0, exports.fibIndex)(3);
+(0, exports.fibIndex)(5);
+(0, exports.fibIndex)(12);
+(0, exports.fibIndex)(15);
