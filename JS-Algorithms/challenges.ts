@@ -28,10 +28,9 @@ export const readableTime = (seconds: number) => {
   if (seconds >= 0) {
     const conversionFactor: number = 60;
     const numSeconds: number = Math.floor(seconds % conversionFactor);
-    let minutes: number = seconds / conversionFactor;
-    const hours: number = Math.floor(minutes / conversionFactor);
+    const hours: number = Math.floor((seconds / conversionFactor) / conversionFactor);
+    const minutes = Math.floor((seconds / conversionFactor) % conversionFactor);
 
-    minutes = Math.floor(minutes % conversionFactor);
     formatHMS = `${padLeadingZeros(hours)}:${padLeadingZeros(minutes)}:${padLeadingZeros(numSeconds)}`
   }
 
