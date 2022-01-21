@@ -13,17 +13,7 @@ Invoking "readableTime(3690)" should return "01:01:30" (HH:MM:SS)
 ***** */
 
 export const readableTime = (seconds: number) => {
-  let formatHMS: string | null = null;
-
-  function padLeadingZeros(num: number) {
-    let formatNum: string = num.toString();
-
-    if (num < 10) {
-      formatNum = `0${num}`;
-    }
-
-    return formatNum;
-  };
+  const padLeadingZeros = (num: number) => num < 10 ? `0${num}` : num.toString() 
 
   if (seconds >= 0) {
     const conversionFactor: number = 60;
@@ -31,10 +21,10 @@ export const readableTime = (seconds: number) => {
     const hours: number = Math.floor((seconds / conversionFactor) / conversionFactor);
     const minutes = Math.floor((seconds / conversionFactor) % conversionFactor);
 
-    formatHMS = `${padLeadingZeros(hours)}:${padLeadingZeros(minutes)}:${padLeadingZeros(numSeconds)}`
+    return `${padLeadingZeros(hours)}:${padLeadingZeros(minutes)}:${padLeadingZeros(numSeconds)}`
+  }else {
+    return null
   }
-
-  return formatHMS;
 };
 
 readableTime(458);
